@@ -115,8 +115,29 @@ form input{
     top: 0;
     right: 0;
     margin: 2rem;
+    cursor: pointer;
 }
 
+.swap-anim{
+    animation: myMove 700ms ease-in-out;
+}
+
+@keyframes myMove {
+    100% {transform: rotate(180deg);}
+}
+
+footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    align-content: center;
+    text-align: center;
+    background-color: #000;
+    color: #0f0;
+    margin: 1rem 0rem 0rem 0rem;
+    padding: 1rem 0rem;
+    border-top: 1px lightgrey solid;
+}
 
 /* Font */
 .lato-thin {

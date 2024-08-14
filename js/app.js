@@ -6,6 +6,7 @@ const dropdowns = document.querySelectorAll(".dropdown select");
 const btn = document.querySelector("#convert-btn");
 const switchBtn = document.querySelector("#switch");
 const msg = document.querySelector(".msg");
+const swap = document.querySelector("i");
 
 let fromCurrency = "INR";
 let toCurrency = "USD";
@@ -69,14 +70,30 @@ for(let select of dropdowns) {
     }
 }
 
+swap.addEventListener("click", (e) => {
+    if(!swap.classList.contains("swap-anim"))
+        swap.classList.add("swap-anim");
+    setTimeout(() => {
+        swap.classList.remove("swap-anim");
+        let newTo = dropdowns[0].value;
+        dropdowns[0].value = dropdowns[1].value;
+        dropdowns[1].value = newTo;
+        updateSelect(dropdowns[0]);
+        updateSelect(dropdowns[1]);
+        convert();
+    }, 700)
+})
+
 btn.addEventListener("click",async (evt) => {
     evt.preventDefault();
-    let response = await fetch(`${base_api}${fromCurrency.toLowerCase()}.json`);
-    let json = await response.json();
+})
+
+const convert = async () => {
+    let json = await (await fetch(`${base_api}${fromCurrency.toLowerCase()}.json`)).json();
     let oneValue = json[fromCurrency.toLowerCase()][toCurrency.toLowerCase()]; // Value
     let userReq = input.value * oneValue;
     msg.innerText = `${input.value} ${fromCurrency} = ${userReq} ${toCurrency}.`;
-})
+}
 
 const updateSelect = (target) => {
     if(target.name === 'to'){
